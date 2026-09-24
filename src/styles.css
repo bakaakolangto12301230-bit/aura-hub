@@ -59,29 +59,57 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --color-glass-border: var(--glass-border);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-snow: var(--snow);
+  --color-shop: var(--shop);
+  --color-event: var(--event);
+  --color-auto: var(--auto);
+  --color-warm: var(--warm);
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
+  --shadow-glass: var(--shadow-glass);
+  --shadow-luminous: var(--shadow-luminous);
+  --shadow-deep: var(--shadow-deep);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 1rem;
+  --background: oklch(0.975 0.006 88);
+  --foreground: oklch(0.2 0.012 220);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.56 0.145 155);
+  --primary-foreground: oklch(0.99 0.004 100);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
+  --muted: oklch(0.94 0.008 88);
+  --muted-foreground: oklch(0.47 0.02 220);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.86 0.012 88 / 75%);
+  --input: oklch(0.9 0.01 88);
+  --ring: oklch(0.56 0.145 155);
+  --glass: oklch(1 0 0 / 62%);
+  --glass-strong: oklch(1 0 0 / 82%);
+  --glass-border: oklch(1 0 0 / 75%);
+  --ink: oklch(0.18 0.014 220);
+  --ink-soft: oklch(0.27 0.018 220);
+  --snow: oklch(0.985 0.004 88);
+  --shop: oklch(0.54 0.095 147);
+  --event: oklch(0.66 0.15 36);
+  --auto: oklch(0.58 0.1 222);
+  --warm: oklch(0.82 0.095 72);
+  --shadow-glass: 0 12px 40px oklch(0.2 0.02 220 / 10%), inset 0 1px 0 oklch(1 0 0 / 75%);
+  --shadow-luminous: 0 12px 32px oklch(0.56 0.145 155 / 25%);
+  --shadow-deep: 0 18px 45px oklch(0.12 0.02 220 / 24%);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +168,62 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 24%, transparent);
+  }
+
+  button, a, input, select {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes soft-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@utility glass-surface {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(22px) saturate(145%);
+}
+
+@utility glass-elevated {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-deep);
+  backdrop-filter: blur(34px) saturate(155%);
+}
+
+@utility reveal-up {
+  animation: reveal-up 0.7s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@utility soft-drift {
+  animation: soft-drift 6s ease-in-out infinite;
+}
+
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
